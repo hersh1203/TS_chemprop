@@ -45,7 +45,7 @@ The scores and SMILES string for each molecule made and scored are saved and (op
 ### Setting up the environment for running Thompson Sampling
 
 Create a new conda environment and install rdkit:
-`conda create -c conda-forge -n <your-env-name> rdkit`
+`conda create -c conda-forge -n <your-env-name> python=3.11 rdkit`
 
 Activate your environment and install the rest of the requirements:
 `conda activate <your-env-name>`
@@ -69,6 +69,9 @@ or
 
 `python ts_main.py examples/quinazoline_fp_sim.json`
 
+or (to use chemprop)
+
+`python ts_main.py examples/chemprop_test.json`
 
 ### Parameters
 
