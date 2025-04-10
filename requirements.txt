@@ -1,4 +1,4 @@
-numpy>=1.25
+numpy==1.26.4
 pandas>=2.0
 rdkit>=2022.03
 tqdm>=4.65
@@ -8,3 +8,9 @@ jupyter
 scikit-learn
 seaborn
 sqlitedict
+torch==2.5.0
+lightning
+lightgbm
+chemprop==1.4.1
+git+https://github.com/bp-kelley/descriptastorus
+

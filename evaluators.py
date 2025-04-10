@@ -4,15 +4,23 @@ from abc import ABC, abstractmethod
 import numpy as np
 from rdkit import Chem
 from rdkit.Chem import rdFingerprintGenerator
-
+import joblib
 import useful_rdkit_utils as uru
+
+import pandas as pd
+import torch
+from lightning import pytorch as pl
+from pathlib import Path
+
+from chemprop.args import PredictArgs
+from chemprop.train import load_model, make_predictions
 
 try:
     from openeye import oechem
     from openeye import oeomega
     from openeye import oeshape
     from openeye import oedocking
-    import joblib
+
 except ImportError:
     # Since openeye is a commercial software package, just pass with a warning if not available
     warnings.warn(f"Openeye packages not available in this environment; do not attempt to use ROCSEvaluator or "
@@ -318,6 +326,35 @@ def test_ml_classifier_eval():
     mol = Chem.MolFromSmiles(smi)
     score = ml_cls_eval.evaluate(mol)
     print(score)
+
+class ChempropEvaluator(Evaluator):
+    """
+    An evaluator class that uses a pretrained Chemprop model to predict a score for a molecule.
+    """
+
+    def __init__(self, input_dict):
+        self.num_evaluations = 0
+        self.model_path = input_dict["model_path"]
+        self.args = PredictArgs().parse_args([
+            '--checkpoint_path', self.model_path,
+            '--test_path', '/dev/null',
+            '--preds_path', '/dev/null',
+            '--features_generator', 'rdkit_2d_normalized',
+            '--no_features_scaling'
+        ])
+        self.model_objects = load_model(self.args)
+
+    @property
+    def counter(self):
+        return self.num_evaluations
+
+    def evaluate(self, mol):
+        self.num_evaluations += 1
+        smiles = Chem.MolToSmiles(mol)
+        preds = make_predictions(args=self.args, smiles=[[smiles]], model_objects=self.model_objects)
+        return float(preds[0][0])
+
+
 
 
 if __name__ == "__main__":
