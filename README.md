@@ -1,3 +1,5 @@
+NOT FUNCTIONAL YET, IN TESTING. JUST WANTED TO SEE THAT IT PUBLISHES
+
 # Thompson Sampling for Virtual Screening
 This version of TS just adds the useage of chemprop 1.4.1 as a scoring function. You can train your chemprop model however you want. Please keep in mind to change the features in the ChempropEvaluator class in evaluator.py to represent the same features you used during training. The current model.pt file is trained on growth a growth inhibition dataset for Acenotobacter baumannii.
 
