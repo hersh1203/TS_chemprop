@@ -2,9 +2,11 @@
 This version of TS just adds the useage of chemprop 1.4.1 as a scoring function. You can train your chemprop model however you want. Please keep in mind to change the features in the ChempropEvaluator class in evaluator.py to represent the same features you used during training. The current model.pt file is trained on growth a growth inhibition dataset for Acenotobacter baumannii.
 
 The CLI command used to train the model.pt file is: 
-`chemprop_train --data_path data/SD_1_training_set.csv --features_generator rdkit_2d_normalized --no_features_scaling --target_columns Activity --dataset_type classification --split_type cv --save_dir models/custom`
+`chemprop_train --data_path data/SD1_training_set.csv --features_generator rdkit_2d_normalized --no_features_scaling --target_columns Activity --dataset_type classification --split_type cv --num_folds 10 --save_dir models/custom`
 
-If you compare this with the ChempropEvaluator class, you will notice that `--no_features_scaling` and `--features generator rdkit_2d_normalized` are specified to properly run the prediction. 
+The dataset and command have been adapted from [Gary Liu's chemprop_abaucin snapshot on Github](https://github.com/GaryLiu152/chemprop_abaucin). Please refer to their Readme for any further queries. Also, the sample "SD1_training_set.csv" needs to be modfied a little bit to add an 'Activity column' where the binarization is ruled by whether the mean is 1 standard deviation below or not. Please refer to their [paper: https://www.nature.com/articles/s41589-023-01349-8](https://www.nature.com/articles/s41589-023-01349-8) for further details.
+
+If you compare the above mentioned command with the ChempropEvaluator class, you will notice that `--no_features_scaling` and `--features generator rdkit_2d_normalized` are specified to properly run the prediction. 
 
 If your trained model uses different parameters/arguments, you will need to edit this class or create a new class with the same basic skeleton. If you create a new class, please do not forget to change the "evaluator_class_name" in your JSON file.
 
