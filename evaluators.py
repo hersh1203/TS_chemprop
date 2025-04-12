@@ -336,7 +336,7 @@ class ChempropEvaluator(Evaluator):
         self.num_evaluations = 0
         self.model_path = input_dict["model_path"]
         self.args = PredictArgs().parse_args([
-            '--checkpoint_path', self.model_path,
+            '--checkpoint_dir', self.model_path,
             '--test_path', '/dev/null',
             '--preds_path', '/dev/null',
             '--features_generator', 'rdkit_2d_normalized',
