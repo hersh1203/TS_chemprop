@@ -1,5 +1,5 @@
 # Thompson Sampling for Virtual Screening
-This version of TS just adds the useage of chemprop 1.4.1 as a scoring function. You can train your chemprop model however you want. Please keep in mind to change the features in the ChempropEvaluator class in evaluator.py to represent the same features you used during training. The current model.pt file is trained on growth a growth inhibition dataset for Acenotobacter baumannii.
+This version of TS just adds the useage of chemprop 1.4.1 as a scoring function. You can train your chemprop model however you want. Please keep in mind to change the features in the ChempropEvaluator classes in evaluators.py to represent the same features you used during training. The current model.pt file is trained on a growth inhibition dataset for Acenotobacter baumannii. You can also use an ensemble of models by using the `ChempropEvaluatory_Ensemble class`. Sample models are given under `models/1.4.1_models`... in fact the model.pt file in the main folder is taken from fold_8 in the 1.4.1_models directory.
 
 The CLI command used to train the model.pt file is: 
 `chemprop_train --data_path data/SD1_training_set.csv --features_generator rdkit_2d_normalized --no_features_scaling --target_columns Activity --dataset_type classification --split_type cv --num_folds 10 --save_dir models/custom`
@@ -10,6 +10,11 @@ If you compare the above mentioned command with the ChempropEvaluator class, you
 
 If your trained model uses different parameters/arguments, you will need to edit this class or create a new class with the same basic skeleton. If you create a new class, please do not forget to change the "evaluator_class_name" in your JSON file.
 
+I've added functionality to do some quick analysis via the following:
+- RDKit_visualization.py prints out the top 12 scored new products that are created using TS. It takes in a .csv file and a column header with the name "smiles" is necessary.
+- new_compound_stats.py runs three different scores: an SA score, a lipinski score, and a QED score on the newly generated compounds. Same principle: it takes in a .csv file with the column header being "smiles".
+
+-------------------------------------------------------------------------------------------------------------------------------------
 
 This repo accompanies our paper ["Thompson Sampling─An Efficient Method for Searching Ultralarge Synthesis on Demand Databases"](https://pubs.acs.org/doi/10.1021/acs.jcim.3c01790).
 
