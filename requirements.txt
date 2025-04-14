@@ -12,5 +12,7 @@ torch==2.5.0
 lightning
 lightgbm
 chemprop==1.4.1
+tensorboard
+tensorboardX
 git+https://github.com/bp-kelley/descriptastorus
 
