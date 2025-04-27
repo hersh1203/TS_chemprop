@@ -12,8 +12,8 @@ import torch
 from lightning import pytorch as pl
 from pathlib import Path
 
-from chemprop.args import PredictArgs
-from chemprop.train import load_model, make_predictions
+from chemprop import data, featurizers, models
+
 
 try:
     from openeye import oechem
@@ -327,22 +327,24 @@ def test_ml_classifier_eval():
     score = ml_cls_eval.evaluate(mol)
     print(score)
 
-class ChempropEvaluator(Evaluator):
+class ChempropEvaluator_212(Evaluator):
     """
-    An evaluator class that uses a pretrained Chemprop model to predict a score for a molecule.
+    An evaluator class that uses a pretrained Chemprop 2.1.2 model to predict a score for a molecule.
     """
 
     def __init__(self, input_dict):
         self.num_evaluations = 0
+        """
         self.model_path = input_dict["model_path"]
         self.args = PredictArgs().parse_args([
-            '--model-path', self.model_path,
-            '--test-path', '/dev/null',
-            '--preds-path', '/dev/null',
-            '--features-generators', 'v1_rdkit_2d_normalized',
-            '--no-descriptor-scaling'
+            '--checkpoint_path', self.model_path,
+            '--test_path', '/dev/null',
+            '--preds_path', '/dev/null',
+            '--features_generator', 'rdkit_2d_normalized',
+            '--no_features_scaling'
         ])
         self.model_objects = load_model(self.args)
+        """
 
     @property
     def counter(self):
@@ -350,9 +352,11 @@ class ChempropEvaluator(Evaluator):
 
     def evaluate(self, mol):
         self.num_evaluations += 1
+        """
         smiles = Chem.MolToSmiles(mol)
         preds = make_predictions(args=self.args, smiles=[[smiles]], model_objects=self.model_objects)
         return float(preds[0][0])
+        """
 
 
 
