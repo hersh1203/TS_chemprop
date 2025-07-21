@@ -1,4 +1,6 @@
 # Thompson Sampling for Virtual Screening
+Readme for my edits/changes:
+
 This version of TS just adds the useage of chemprop 1.4.1 as a scoring function. You can train your chemprop model however you want. Please keep in mind to change the features in the ChempropEvaluator classes in evaluators.py to represent the same features you used during training. The current model.pt file is trained on a growth inhibition dataset for Acenotobacter baumannii. You can also use an ensemble of models by using the `ChempropEvaluatory_Ensemble class`. Sample models are given under `models/1.4.1_models`... in fact the model.pt file in the main folder is taken from fold_8 in the 1.4.1_models directory.
 
 The CLI command used to train the model.pt file is: 
@@ -15,6 +17,7 @@ I've added functionality to do some quick analysis via the following:
 - new_compound_stats.py runs three different scores: an SA score, a lipinski score, and a QED score on the newly generated compounds. Same principle: it takes in a .csv file with the column header being "smiles".
 
 -------------------------------------------------------------------------------------------------------------------------------------
+# Original readme from the main project:
 
 This repo accompanies our paper ["Thompson Sampling─An Efficient Method for Searching Ultralarge Synthesis on Demand Databases"](https://pubs.acs.org/doi/10.1021/acs.jcim.3c01790).
 
